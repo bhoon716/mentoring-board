@@ -19,7 +19,7 @@
     <div class="post" th:each="post, stat : ${posts}">
         <span class="post-number" th:text="${stat.count}">1</span>
         <span class="post-title" th:text="${post.title}">제목</span>
-        <a th:href="">
+        <a th:href="@{'/posts/' + ${post.id}}">
             <button>상세보기</button>
         </a>
     </div>
