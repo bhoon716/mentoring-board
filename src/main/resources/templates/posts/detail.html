@@ -6,6 +6,44 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1>글 상세보기</h1>
+
+<h1>게시글 상세보기</h1>
+
+<div class="post-detail">
+    <h3 th:text="${post.title}">제목</h3>
+    <p th:text="${post.content}">내용</p>
+</div>
+
+<div class="buttons">
+    <a th:href="@{'/posts/' + ${post.id} + '/edit-form'}">
+        <button>수정</button>
+    </a>
+    <button type="button" th:onclick="'deletePost(' + ${post.id} + ')'">삭제</button>
+    <a href="/posts">
+        <button>목록으로</button>
+    </a>
+</div>
+
+<script th:inline="javascript">
+    function deletePost(id) {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            fetch(`/posts/${id}`, {
+                method: 'DELETE'
+            })
+                .then(res => {
+                    if (res.ok) {
+                        alert('삭제되었습니다');
+                        window.location.href = '/posts';
+                    } else {
+                        alert('삭제 실패');
+                    }
+                })
+                .catch(() => {
+                    alert('요청 실패');
+                });
+        }
+    }
+</script>
+
 </body>
 </html>
